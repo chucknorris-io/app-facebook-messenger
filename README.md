@@ -16,7 +16,7 @@ beard, and his role in the action television series Walker, Texas Ranger.
 
 ## Deployment
 
-TODO
+    ./gradlew clean appengineUpdate
 
 ## License
 
