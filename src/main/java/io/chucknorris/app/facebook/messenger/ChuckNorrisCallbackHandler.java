@@ -17,6 +17,7 @@
 package io.chucknorris.app.facebook.messenger;
 
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_CATEGORIES;
+import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HELP;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HI;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HOW_ARE_YOU;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_RANDOM_JOKE;
@@ -119,6 +120,8 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
                 sendHi(messenger, senderId);
             } else if (pattern == PATTERN_HOW_ARE_YOU) {
                 sendDoingFine(messenger, senderId);
+            } else if (pattern == PATTERN_HELP) {
+                sendHelp(messenger, senderId);
             } else if (pattern == PATTERN_RANDOM_JOKE) {
                 sendRandomJoke(messenger, senderId);
             } else if (pattern == PATTERN_RANDOM_JOKE_WITH_CATEGORY) {

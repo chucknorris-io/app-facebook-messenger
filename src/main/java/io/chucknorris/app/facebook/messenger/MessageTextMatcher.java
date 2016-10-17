@@ -36,7 +36,10 @@ public class MessageTextMatcher {
             Pattern.compile("(hi|hello)(.*)?", CASE_INSENSITIVE);
 
     public static final Pattern PATTERN_HOW_ARE_YOU =
-            Pattern.compile("how are you(.*)?", CASE_INSENSITIVE);
+            Pattern.compile("(.*)?how are you(.*)?", CASE_INSENSITIVE);
+
+    public static final Pattern PATTERN_HELP =
+            Pattern.compile("(.*)?help(.*)?", CASE_INSENSITIVE);
 
     public static final Pattern PATTERN_RANDOM_JOKE =
             Pattern.compile("(.* )?joke(.*)?", CASE_INSENSITIVE);
@@ -52,12 +55,15 @@ public class MessageTextMatcher {
             Pattern.compile("(.* )?categories(.*)?", CASE_INSENSITIVE);
 
     private static final List<Pattern> PATTERNS = Arrays.asList(
+            // do not change the order of the patterns
             PATTERN_CATEGORIES,
             PATTERN_SEARCH_JOKE,
             PATTERN_RANDOM_JOKE_WITH_CATEGORY,
             PATTERN_RANDOM_JOKE,
+            PATTERN_HELP,
             PATTERN_HI,
-            PATTERN_HOW_ARE_YOU);
+            PATTERN_HOW_ARE_YOU
+            );
 
     public Matcher match(String messageText) {
         for (Pattern pattern : PATTERNS) {

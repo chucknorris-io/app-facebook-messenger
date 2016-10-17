@@ -17,6 +17,7 @@
 package io.chucknorris.app.facebook.messenger;
 
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_CATEGORIES;
+import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HELP;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_RANDOM_JOKE;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_RANDOM_JOKE_WITH_CATEGORY;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_SEARCH_JOKE;
@@ -40,6 +41,13 @@ public class MessageTextMatcherTests {
     @Before
     public void setUp() {
         matcher = new MessageTextMatcher();
+    }
+
+    @Test
+    public void testPatternHelp() {
+        assertThat(matcher.match("help").pattern(), is(sameInstance(PATTERN_HELP)));
+        assertThat(matcher.match("hi, I need help").pattern(), is(sameInstance(PATTERN_HELP)));
+        assertThat(matcher.match("hi, I need help!").pattern(), is(sameInstance(PATTERN_HELP)));
     }
 
     @Test
