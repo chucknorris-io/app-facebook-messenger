@@ -16,6 +16,14 @@ beard, and his role in the action television series Walker, Texas Ranger.
 
 ## Deployment
 
+First make sure to store the encrypted tokens and app secret as we don't want to store them GitHub.
+
+    ./gradlew addCredentials --key chucknorrisIoVerifyToken --value the-verify-token
+    ./gradlew addCredentials --key chucknorrisIoAccessToken --value the-access-token
+    ./gradlew addCredentials --key chucknorrisIoAppSecret --value the-app-secret
+
+After the tokens and app secret we can deploy the app to Google App Engine.
+
     ./gradlew clean appengineUpdate
 
 ## License

@@ -30,9 +30,9 @@ public class ChuckNorrisMessengerProvider implements MessengerProvider {
 
     @Override
     public Messenger getMessenger() {
-        String verifyToken = System.getProperty("restfbmessenger.verify_token");
-        String accessToken = System.getProperty("restfbmessenger.access_token");
-        String appSecret = System.getProperty("restfbmessenger.app_secret");
+        String verifyToken = System.getProperty("facebook.verify_token");
+        String accessToken = System.getProperty("facebook.access_token");
+        String appSecret = System.getProperty("facebook.app_secret");
         CallbackHandler callbackHandler = new ChuckNorrisCallbackHandler();
         return new DefaultMessenger(verifyToken, accessToken, appSecret, callbackHandler);
     }

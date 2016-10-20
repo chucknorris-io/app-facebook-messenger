@@ -21,7 +21,7 @@ ext {
     servletVersion = "2.5"
 }
 
-description = "Chuck Norris IO Facebook Messenger Chatbot"
+description = "Chuck Norris IO App for Facebook Messenger"
 
 apply plugin: "java"
 apply plugin: "idea"
@@ -70,9 +70,10 @@ idea {
 war {
     filesMatching("**/appengine-web.xml") {
         expand([
-            "restfbmessengerVerifyToken": credentials.chuckbotVerifyToken,
-            "restfbmessengerAccessToken": credentials.chuckbotAccessToken,
-            "restfbmessengerAppSecret": credentials.chuckbotAppSecret
+            "appengineAppId": "chucknorris-io-fb-messenger",
+            "facebookVerifyToken": credentials.chucknorrisIoVerifyToken,
+            "facebookAccessToken": credentials.chucknorrisIoAccessToken,
+            "facebookAppSecret": credentials.chucknorrisIoAppSecret
         ])
     }
 }
