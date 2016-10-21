@@ -4,6 +4,11 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
     <servlet>
+        <servlet-name>heartbeat</servlet-name>
+        <servlet-class>io.chucknorris.app.facebook.messenger.HeartbeatServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>webhook</servlet-name>
         <servlet-class>com.github.marsbits.restfbmessenger.webhook.WebhookServlet</servlet-class>
         <init-param>
@@ -11,6 +16,11 @@
             <param-value>io.chucknorris.app.facebook.messenger.ChuckNorrisMessengerProvider</param-value>
         </init-param>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>heartbeat</servlet-name>
+        <url-pattern>/heartbeat</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>webhook</servlet-name>
