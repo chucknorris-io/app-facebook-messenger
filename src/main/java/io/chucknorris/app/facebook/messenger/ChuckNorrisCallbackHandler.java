@@ -297,8 +297,7 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
     private void sendHelp(Messenger messenger, String senderId) {
         IdMessageRecipient recipient = new IdMessageRecipient(senderId);
         messenger.send().typingOn(recipient);
-        ButtonTemplatePayload buttonTemplate = new ButtonTemplatePayload();
-        buttonTemplate.setText(
+        ButtonTemplatePayload buttonTemplate = new ButtonTemplatePayload(
                 "Hi there. I can tell you random Chuck Norris jokes. Ask me things like the following:"
                         + "\n"
                         + "\n  • Tell me a joke"
