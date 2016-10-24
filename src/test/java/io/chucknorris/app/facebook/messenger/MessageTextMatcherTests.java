@@ -18,6 +18,9 @@ package io.chucknorris.app.facebook.messenger;
 
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_CATEGORIES;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HELP;
+import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HI;
+import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HOW_ARE_YOU;
+import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_LOL;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_RANDOM_JOKE;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_RANDOM_JOKE_WITH_CATEGORY;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_SEARCH_JOKE;
@@ -41,6 +44,35 @@ public class MessageTextMatcherTests {
     @Before
     public void setUp() {
         matcher = new MessageTextMatcher();
+    }
+
+    @Test
+    public void testPatternHi() {
+        assertThat(matcher.match("hi").pattern(), is(sameInstance(PATTERN_HI)));
+        assertThat(matcher.match("hi chcuck!").pattern(), is(sameInstance(PATTERN_HI)));
+        assertThat(matcher.match("hello").pattern(), is(sameInstance(PATTERN_HI)));
+        assertThat(matcher.match("hello chuck!").pattern(), is(sameInstance(PATTERN_HI)));
+    }
+
+    @Test
+    public void testPatternHowAreYou() {
+        assertThat(matcher.match("how are you").pattern(), is(sameInstance(PATTERN_HOW_ARE_YOU)));
+        assertThat(matcher.match("how are you?").pattern(), is(sameInstance(PATTERN_HOW_ARE_YOU)));
+        assertThat(matcher.match("hi, how are you?").pattern(), is(sameInstance(PATTERN_HOW_ARE_YOU)));
+        assertThat(matcher.match("hi, how are you today?").pattern(), is(sameInstance(PATTERN_HOW_ARE_YOU)));
+    }
+
+    @Test
+    public void testPatternLol() {
+        assertThat(matcher.match("lol").pattern(), is(sameInstance(PATTERN_LOL)));
+        assertThat(matcher.match("lol laughing my ass off").pattern(), is(sameInstance(PATTERN_LOL)));
+        assertThat(matcher.match("haha").pattern(), is(sameInstance(PATTERN_LOL)));
+        assertThat(matcher.match("hahaha").pattern(), is(sameInstance(PATTERN_LOL)));
+        assertThat(matcher.match("hahahaha that was funny").pattern(), is(sameInstance(PATTERN_LOL)));
+        assertThat(matcher.match(":)").pattern(), is(sameInstance(PATTERN_LOL)));
+        assertThat(matcher.match(":-)").pattern(), is(sameInstance(PATTERN_LOL)));
+        assertThat(matcher.match(":D").pattern(), is(sameInstance(PATTERN_LOL)));
+        assertThat(matcher.match(":-D").pattern(), is(sameInstance(PATTERN_LOL)));
     }
 
     @Test

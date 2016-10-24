@@ -38,6 +38,9 @@ public class MessageTextMatcher {
     public static final Pattern PATTERN_HOW_ARE_YOU =
             Pattern.compile("(.*)?how are you(.*)?", CASE_INSENSITIVE);
 
+    public static final Pattern PATTERN_LOL =
+            Pattern.compile("(lol|haha*|:\\)|:-\\)|:D|:-D)(.*)?", CASE_INSENSITIVE);
+
     public static final Pattern PATTERN_HELP =
             Pattern.compile("(.*)?help(.*)?", CASE_INSENSITIVE);
 
@@ -61,8 +64,9 @@ public class MessageTextMatcher {
             PATTERN_RANDOM_JOKE_WITH_CATEGORY,
             PATTERN_RANDOM_JOKE,
             PATTERN_HELP,
+            PATTERN_HOW_ARE_YOU,
             PATTERN_HI,
-            PATTERN_HOW_ARE_YOU
+            PATTERN_LOL
             );
 
     public Matcher match(String messageText) {

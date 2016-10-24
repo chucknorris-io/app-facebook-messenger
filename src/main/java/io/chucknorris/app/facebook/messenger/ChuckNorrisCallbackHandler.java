@@ -20,6 +20,7 @@ import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_C
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HELP;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HI;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HOW_ARE_YOU;
+import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_LOL;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_RANDOM_JOKE;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_RANDOM_JOKE_WITH_CATEGORY;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_SEARCH_JOKE;
@@ -94,7 +95,11 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
             handlePayload(messenger, senderId, payload);
         } else {
             String messageText = message.getText();
-            handleMessageText(messenger, senderId, messageText);
+            if (StringUtils.isNotBlank(messageText)) {
+                handleMessageText(messenger, senderId, messageText);
+            } else {
+                sendMisunderstand(messenger, senderId);
+            }
         }
     }
 
@@ -120,6 +125,8 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
                 sendHi(messenger, senderId);
             } else if (pattern == PATTERN_HOW_ARE_YOU) {
                 sendDoingFine(messenger, senderId);
+            } else if (pattern == PATTERN_LOL) {
+                sendFunny(messenger, senderId);
             } else if (pattern == PATTERN_HELP) {
                 sendHelp(messenger, senderId);
             } else if (pattern == PATTERN_RANDOM_JOKE) {
@@ -192,7 +199,8 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
     private void sendMisunderstand(Messenger messenger, String senderId) {
         IdMessageRecipient recipient = new IdMessageRecipient(senderId);
         messenger.send().typingOn(recipient);
-        messenger.send().textMessage(recipient, "I don't really understand, try asking me something else or ask 'help'."); // TODO
+        messenger.send().textMessage(recipient,
+                "Sorry dude I don't understand. Ask me something else or type 'help'.");
         messenger.send().typingOff(recipient);
     }
 
@@ -232,6 +240,13 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
         messenger.send().typingOff(recipient);
     }
 
+    private void sendFunny(Messenger messenger, String senderId) {
+        IdMessageRecipient recipient = new IdMessageRecipient(senderId);
+        messenger.send().typingOn(recipient);
+        messenger.send().textMessage(recipient, "That was funny wasn't it!");
+        messenger.send().typingOff(recipient);
+    }
+
     private void sendRandomJoke(Messenger messenger, String senderId, String category) {
         IdMessageRecipient recipient = new IdMessageRecipient(senderId);
         messenger.send().typingOn(recipient);
@@ -241,7 +256,9 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
             if (categories.contains(category)) {
                 textMessage = chuckNorrisClient.getRandomJoke(category).getValue();
             } else {
-                textMessage = "I couldn't find the category you are looking for, try another one.";
+                textMessage =
+                        format("Sorry dude, I've found no jokes for the given category ('%s'). Type 'categories' to see available categories.",
+                                category);
             }
         } else {
             textMessage = chuckNorrisClient.getRandomJoke().getValue();
@@ -259,7 +276,8 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
             int i = new Random().nextInt(jokes.size());
             textMessage = jokes.get(i).getValue();
         } else {
-            textMessage = format("It seems there are no Chuck Norris jokes containing %s.", query);
+            textMessage = format(
+                    "Your search for '%s' did not match any joke. Make sure that all words are spelled correctly. Try different keywords. Try more general keywords.");
         }
         messenger.send().textMessage(recipient, textMessage);
         messenger.send().typingOff(recipient);
