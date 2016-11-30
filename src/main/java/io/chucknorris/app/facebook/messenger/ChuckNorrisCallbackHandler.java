@@ -277,7 +277,7 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
             textMessage = jokes.get(i).getValue();
         } else {
             textMessage = format(
-                    "Your search for '%s' did not match any joke. Make sure that all words are spelled correctly. Try different keywords. Try more general keywords.");
+                    "Your search for '%s' did not match any joke. Make sure that all words are spelled correctly. Try different keywords. Try more general keywords.", query);
         }
         messenger.send().textMessage(recipient, textMessage);
         messenger.send().typingOff(recipient);
