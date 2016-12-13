@@ -63,8 +63,7 @@ import io.chucknorris.client.Joke;
  */
 public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
 
-    private static final Logger logger =
-            Logger.getLogger(ChuckNorrisCallbackHandler.class.getName());
+    private static final Logger logger = Logger.getLogger(ChuckNorrisCallbackHandler.class.getName());
 
     public static final String PAYLOAD_GET_STARTED = "GET_STARTED";
     public static final String PAYLOAD_RANDOM_JOKE = "RANDOM_JOKE";
@@ -121,7 +120,7 @@ public class ChuckNorrisCallbackHandler extends AbstractCallbackHandler {
         Matcher match = messageTextMatcher.match(messageText);
         if (match == null) {
             if (categoriesCache.containsIgnoreCase(messageText)) {
-                sendRandomJoke(messenger, senderId, messageText);
+                sendRandomJoke(messenger, senderId, categoriesCache.getCategory(messageText));
             } else {
                 sendMisunderstand(messenger, senderId);
             }

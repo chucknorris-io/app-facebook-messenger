@@ -33,8 +33,7 @@ import io.chucknorris.client.ChuckNorrisClient;
  */
 public class CategoriesCache {
 
-    private static final Logger logger =
-            Logger.getLogger(CategoriesCache.class.getName());
+    private static final Logger logger = Logger.getLogger(CategoriesCache.class.getName());
 
     private static final long DEFAULR_REFRESH_INTERVAL = TimeUnit.DAYS.toMillis(1);
 
@@ -84,5 +83,14 @@ public class CategoriesCache {
             }
         }
         return false;
+    }
+
+    public String getCategory(String category) {
+        for (String cat : getCategories()) {
+            if (cat.equalsIgnoreCase(category)) {
+                return cat;
+            }
+        }
+        return null;
     }
 }

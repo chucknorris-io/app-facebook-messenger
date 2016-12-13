@@ -5,13 +5,13 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath "com.google.appengine:gradle-appengine-plugin:1.9.46"
+        classpath "com.google.appengine:gradle-appengine-plugin:1.9.48"
         classpath "nu.studer:gradle-credentials-plugin:1.0.1"
     }
 }
 
 ext {
-    appengineVersion = "1.9.46"
+    appengineVersion = "1.9.48"
     chuckNorrisVersion = "1.0.1"
     commonsCollectionVersion = "4.1"
     commonsLangVersion = "3.4"
@@ -80,5 +80,5 @@ war {
 
 task wrapper(type: Wrapper) {
     description = "Generates gradlew[.bat] scripts."
-    gradleVersion = "3.2"
+    gradleVersion = "3.2.1"
 }
