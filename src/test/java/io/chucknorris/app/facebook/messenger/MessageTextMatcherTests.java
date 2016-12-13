@@ -16,6 +16,7 @@
 
 package io.chucknorris.app.facebook.messenger;
 
+import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_ANOTHER_JOKE;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_CATEGORIES;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HELP;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_HI;
@@ -24,6 +25,7 @@ import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_L
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_RANDOM_JOKE;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_RANDOM_JOKE_WITH_CATEGORY;
 import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_SEARCH_JOKE;
+import static io.chucknorris.app.facebook.messenger.MessageTextMatcher.PATTERN_WHAT_IS_YOUR_NAME;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -52,6 +54,14 @@ public class MessageTextMatcherTests {
         assertThat(matcher.match("hi chcuck!").pattern(), is(sameInstance(PATTERN_HI)));
         assertThat(matcher.match("hello").pattern(), is(sameInstance(PATTERN_HI)));
         assertThat(matcher.match("hello chuck!").pattern(), is(sameInstance(PATTERN_HI)));
+    }
+
+    @Test
+    public void testPatternWhatIsYourName() {
+        assertThat(matcher.match("your name").pattern(), is(sameInstance(PATTERN_WHAT_IS_YOUR_NAME)));
+        assertThat(matcher.match("your name?").pattern(), is(sameInstance(PATTERN_WHAT_IS_YOUR_NAME)));
+        assertThat(matcher.match("what is your name").pattern(), is(sameInstance(PATTERN_WHAT_IS_YOUR_NAME)));
+        assertThat(matcher.match("hi, what is your name?").pattern(), is(sameInstance(PATTERN_WHAT_IS_YOUR_NAME)));
     }
 
     @Test
@@ -87,54 +97,44 @@ public class MessageTextMatcherTests {
         assertThat(matcher.match("joke").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE)));
         assertThat(matcher.match("random joke").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE)));
         assertThat(matcher.match("tell joke").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE)));
-        assertThat(matcher.match("tell me a joke").pattern(),
-                is(sameInstance(PATTERN_RANDOM_JOKE)));
-        assertThat(matcher.match("tell me a joke!").pattern(),
-                is(sameInstance(PATTERN_RANDOM_JOKE)));
-        assertThat(matcher.match("tell me a joke bot").pattern(),
-                is(sameInstance(PATTERN_RANDOM_JOKE)));
-        assertThat(matcher.match("hi bot, tell me a joke").pattern(),
-                is(sameInstance(PATTERN_RANDOM_JOKE)));
+        assertThat(matcher.match("tell me a joke").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE)));
+        assertThat(matcher.match("tell me a joke!").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE)));
+        assertThat(matcher.match("tell me a joke bot").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE)));
+        assertThat(matcher.match("hi bot, tell me a joke").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE)));
     }
 
     @Test
     public void testPatternRandomJokeWithCateogry() {
-        assertThat(matcher.match("joke category food").pattern(),
-                is(sameInstance(PATTERN_RANDOM_JOKE_WITH_CATEGORY)));
-        assertThat(matcher.match("joke category food").group("category"),
-                is(equalTo("food")));
-        assertThat(matcher.match("joke with category fashion").pattern(),
-                is(sameInstance(PATTERN_RANDOM_JOKE_WITH_CATEGORY)));
-        assertThat(matcher.match("joke with category fashion").group("category"),
-                is(equalTo("fashion")));
-        assertThat(matcher.match("hi, tell me a joke with category religion").pattern(),
-                is(sameInstance(PATTERN_RANDOM_JOKE_WITH_CATEGORY)));
-        assertThat(matcher.match("hi, tell me a joke with category religion").group("category"),
-                is(equalTo("religion")));
+        assertThat(matcher.match("joke category food").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE_WITH_CATEGORY)));
+        assertThat(matcher.match("joke category food").group("category"), is(equalTo("food")));
+        assertThat(matcher.match("joke with category fashion").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE_WITH_CATEGORY)));
+        assertThat(matcher.match("joke with category fashion").group("category"), is(equalTo("fashion")));
+        assertThat(matcher.match("hi, tell me a joke with category religion").pattern(), is(sameInstance(PATTERN_RANDOM_JOKE_WITH_CATEGORY)));
+        assertThat(matcher.match("hi, tell me a joke with category religion").group("category"), is(equalTo("religion")));
     }
 
     @Test
     public void testPatternSearchJoke() {
-        assertThat(matcher.match("search joke containing food").pattern(),
-                is(sameInstance(PATTERN_SEARCH_JOKE)));
-        assertThat(matcher.match("search joke containing food").group("query"),
-                is(equalTo("food")));
-        assertThat(matcher.match("search joke with fashion").pattern(),
-                is(sameInstance(PATTERN_SEARCH_JOKE)));
-        assertThat(matcher.match("search joke with fashion").group("query"),
-                is(equalTo("fashion")));
-        assertThat(matcher.match("hi, find me a joke with religion").pattern(),
-                is(sameInstance(PATTERN_SEARCH_JOKE)));
-        assertThat(matcher.match("hi, find me a joke with religion").group("query"),
-                is(equalTo("religion")));
+        assertThat(matcher.match("search joke containing food").pattern(), is(sameInstance(PATTERN_SEARCH_JOKE)));
+        assertThat(matcher.match("search joke containing food").group("query"), is(equalTo("food")));
+        assertThat(matcher.match("search joke with fashion").pattern(), is(sameInstance(PATTERN_SEARCH_JOKE)));
+        assertThat(matcher.match("search joke with fashion").group("query"), is(equalTo("fashion")));
+        assertThat(matcher.match("hi, find me a joke with religion").pattern(), is(sameInstance(PATTERN_SEARCH_JOKE)));
+        assertThat(matcher.match("hi, find me a joke with religion").group("query"), is(equalTo("religion")));
+    }
+
+    @Test
+    public void testPatternAnotherJoke() {
+        assertThat(matcher.match("another").pattern(), is(sameInstance(PATTERN_ANOTHER_JOKE)));
+        assertThat(matcher.match("again").pattern(), is(sameInstance(PATTERN_ANOTHER_JOKE)));
+        assertThat(matcher.match("tell me another one").pattern(), is(sameInstance(PATTERN_ANOTHER_JOKE)));
+        assertThat(matcher.match("haha, tell me another!").pattern(), is(sameInstance(PATTERN_ANOTHER_JOKE)));
     }
 
     @Test
     public void testPatternCategories() {
         assertThat(matcher.match("categories").pattern(), is(sameInstance(PATTERN_CATEGORIES)));
-        assertThat(matcher.match("list categories").pattern(),
-                is(sameInstance(PATTERN_CATEGORIES)));
-        assertThat(matcher.match("hi, show me the categories!").pattern(),
-                is(sameInstance(PATTERN_CATEGORIES)));
+        assertThat(matcher.match("list categories").pattern(), is(sameInstance(PATTERN_CATEGORIES)));
+        assertThat(matcher.match("hi, show me the categories!").pattern(), is(sameInstance(PATTERN_CATEGORIES)));
     }
 }

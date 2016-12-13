@@ -34,8 +34,7 @@ public class HeartbeatServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(HeartbeatServlet.class.getName());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.fine("Received heartbeat");
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().write("I'm alive!");

@@ -32,30 +32,25 @@ import java.util.regex.Pattern;
  */
 public class MessageTextMatcher {
 
-    public static final Pattern PATTERN_HI =
-            Pattern.compile("(hi|hello)(.*)?", CASE_INSENSITIVE);
+    public static final Pattern PATTERN_HI = compilePattern("(hi|hello)(.*)?");
 
-    public static final Pattern PATTERN_HOW_ARE_YOU =
-            Pattern.compile("(.*)?how are you(.*)?", CASE_INSENSITIVE);
+    public static final Pattern PATTERN_WHAT_IS_YOUR_NAME = compilePattern("(.*)?your name(.*)?");
 
-    public static final Pattern PATTERN_LOL =
-            Pattern.compile("(lol|haha*|:\\)|:-\\)|:D|:-D)(.*)?", CASE_INSENSITIVE);
+    public static final Pattern PATTERN_HOW_ARE_YOU = compilePattern("(.*)?how are you(.*)?");
 
-    public static final Pattern PATTERN_HELP =
-            Pattern.compile("(.*)?help(.*)?", CASE_INSENSITIVE);
+    public static final Pattern PATTERN_LOL = compilePattern("(lol|funny|haha*|hilarious|:\\)|:-\\)|:D|:-D)(.*)?");
 
-    public static final Pattern PATTERN_RANDOM_JOKE =
-            Pattern.compile("(.* )?joke(.*)?", CASE_INSENSITIVE);
+    public static final Pattern PATTERN_HELP = compilePattern("(.*)?help(.*)?");
 
-    public static final Pattern PATTERN_RANDOM_JOKE_WITH_CATEGORY =
-            Pattern.compile("(.* )?joke (.* )?category (?<category>.*)", CASE_INSENSITIVE);
+    public static final Pattern PATTERN_RANDOM_JOKE = compilePattern("(.* )?joke(.*)?");
 
-    public static final Pattern PATTERN_SEARCH_JOKE =
-            Pattern.compile("(.* )?(search|find) (.* )?joke (with|containing) (?<query>.*)",
-                    CASE_INSENSITIVE);
+    public static final Pattern PATTERN_RANDOM_JOKE_WITH_CATEGORY = compilePattern("(.* )?joke (.* )?category (?<category>.*)");
 
-    public static final Pattern PATTERN_CATEGORIES =
-            Pattern.compile("(.* )?categories(.*)?", CASE_INSENSITIVE);
+    public static final Pattern PATTERN_SEARCH_JOKE = compilePattern("(.* )?(search|find) (.* )?joke (with|containing) (?<query>.*)");
+
+    public static final Pattern PATTERN_ANOTHER_JOKE = compilePattern("(.* )?(another|again)(.*)?");
+
+    public static final Pattern PATTERN_CATEGORIES = compilePattern("(.* )?categories(.*)?");
 
     private static final List<Pattern> PATTERNS = Arrays.asList(
             // do not change the order of the patterns
@@ -63,7 +58,9 @@ public class MessageTextMatcher {
             PATTERN_SEARCH_JOKE,
             PATTERN_RANDOM_JOKE_WITH_CATEGORY,
             PATTERN_RANDOM_JOKE,
+            PATTERN_ANOTHER_JOKE,
             PATTERN_HELP,
+            PATTERN_WHAT_IS_YOUR_NAME,
             PATTERN_HOW_ARE_YOU,
             PATTERN_HI,
             PATTERN_LOL
@@ -77,5 +74,9 @@ public class MessageTextMatcher {
             }
         }
         return null;
+    }
+
+    private static Pattern compilePattern(String pattern) {
+        return Pattern.compile(pattern, CASE_INSENSITIVE);
     }
 }

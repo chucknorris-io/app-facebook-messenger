@@ -12,7 +12,7 @@ buildscript {
 
 ext {
     appengineVersion = "1.9.46"
-    chuckNorrisVersion = "1.0.0"
+    chuckNorrisVersion = "1.0.1"
     commonsCollectionVersion = "4.1"
     commonsLangVersion = "3.4"
     junitVersion = "4.12"

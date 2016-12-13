@@ -62,21 +62,27 @@ public class CategoriesCache {
             }
             synchronized (CategoriesCache.class) {
                 logger.info("Retrieving categories");
-                if (categories == null
-                        || refreshTimestamp < System.currentTimeMillis()) {
+                if (categories == null || refreshTimestamp < System.currentTimeMillis()) {
                     categories = chuckNorrisClient.getCategories();
-                    refreshTimestamp =
-                            System.currentTimeMillis() + refreshInterval;
+                    refreshTimestamp = System.currentTimeMillis() + refreshInterval;
                 }
             }
         } else {
-            logger.fine(format("Categories cache not expired yet (%d millis until refresh)",
-                    (refreshTimestamp - currentTimeMillis)));
+            logger.fine(format("Categories cache not expired yet (%d millis until refresh)", (refreshTimestamp - currentTimeMillis)));
         }
         return categories;
     }
 
     public List<List<String>> getCategoriesPaged(int pageSize) {
         return ListUtils.partition(getCategories(), pageSize);
+    }
+
+    public boolean containsIgnoreCase(String category) {
+        for (String cat : getCategories()) {
+            if (cat.equalsIgnoreCase(category)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
