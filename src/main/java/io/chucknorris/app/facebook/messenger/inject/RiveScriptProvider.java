@@ -30,7 +30,7 @@ import io.chucknorris.client.ChuckNorrisClient;
 import java.io.File;
 
 /**
- * TODO
+ * The {@link RiveScript} instance provider.
  *
  * @author Marcel Overdijk
  */

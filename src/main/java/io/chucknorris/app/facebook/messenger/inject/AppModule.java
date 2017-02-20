@@ -19,6 +19,7 @@ package io.chucknorris.app.facebook.messenger.inject;
 import com.github.marsbits.restfbmessenger.DefaultMessenger;
 import com.github.marsbits.restfbmessenger.Messenger;
 import com.google.inject.AbstractModule;
+import com.google.inject.Module;
 import com.google.inject.Provides;
 import com.google.inject.Scopes;
 import com.google.inject.Singleton;
@@ -28,7 +29,7 @@ import io.chucknorris.app.facebook.messenger.callback.ChuckNorrisCallbackHandler
 import io.chucknorris.client.ChuckNorrisClient;
 
 /**
- * TODO
+ * The application's main {@link Module}.
  *
  * @author Marcel Overdijk
  */

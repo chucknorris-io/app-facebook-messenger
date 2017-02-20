@@ -173,7 +173,7 @@ public class TextMessageIntegrationTests extends AbstractChuckNorrisCallbackHand
     }
 
     @Test
-    public void testCategorieTextMessagess() {
+    public void testCategorieTextMessages() {
         onMessage("categories");
         List<QuickReply> quickReplies = Arrays.asList(
                 new QuickReply("category1", "RANDOM_JOKE_WITH_CATEGORY_category1"),
@@ -189,7 +189,7 @@ public class TextMessageIntegrationTests extends AbstractChuckNorrisCallbackHand
     }
 
     @Test
-    public void testListCategorieTextMessagess() {
+    public void testListCategoriesTextMessages() {
         onMessage("list categories");
         List<QuickReply> quickReplies = Arrays.asList(
                 new QuickReply("category1", "RANDOM_JOKE_WITH_CATEGORY_category1"),

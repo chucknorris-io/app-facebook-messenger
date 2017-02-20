@@ -21,7 +21,7 @@ import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 
 /**
- * TODO
+ * The {@link GuiceServletContextListener} for kickstarting this web application.
  *
  * @author Marcel Overdijk
  */

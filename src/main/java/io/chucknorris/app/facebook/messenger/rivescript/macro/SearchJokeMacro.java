@@ -18,7 +18,6 @@ package io.chucknorris.app.facebook.messenger.rivescript.macro;
 
 import com.rivescript.RiveScript;
 import com.rivescript.macro.Subroutine;
-import io.chucknorris.app.facebook.messenger.callback.ChuckNorrisCallbackHandler;
 import io.chucknorris.client.ChuckNorrisClient;
 import io.chucknorris.client.Joke;
 
@@ -36,7 +35,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class SearchJokeMacro implements Subroutine {
 
-    private static final Logger logger = Logger.getLogger(ChuckNorrisCallbackHandler.class.getName());
+    private static final Logger logger = Logger.getLogger(SearchJokeMacro.class.getName());
 
     private final ChuckNorrisClient chuckNorrisClient;
 

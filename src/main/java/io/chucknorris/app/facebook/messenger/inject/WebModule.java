@@ -23,7 +23,7 @@ import com.google.inject.servlet.ServletModule;
 import io.chucknorris.app.facebook.messenger.servlet.HeartbeatServlet;
 
 /**
- * TODO
+ * The application's {@link ServletModule}.
  *
  * @author Marcel Overdijk
  */

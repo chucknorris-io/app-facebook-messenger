@@ -19,7 +19,6 @@ package io.chucknorris.app.facebook.messenger.rivescript.macro;
 import com.rivescript.RiveScript;
 import com.rivescript.macro.Subroutine;
 import io.chucknorris.app.facebook.messenger.cache.CategoriesCache;
-import io.chucknorris.app.facebook.messenger.callback.ChuckNorrisCallbackHandler;
 import io.chucknorris.client.ChuckNorrisClient;
 
 import java.util.List;
@@ -35,7 +34,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class RandomJokeMacro implements Subroutine {
 
-    private static final Logger logger = Logger.getLogger(ChuckNorrisCallbackHandler.class.getName());
+    private static final Logger logger = Logger.getLogger(RandomJokeMacro.class.getName());
 
     private final ChuckNorrisClient chuckNorrisClient;
     private final CategoriesCache categoriesCache;
