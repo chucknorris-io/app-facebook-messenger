@@ -1,0 +1,79 @@
+! version = 2.0
+
+// ----------------------------------------------------------------------------
+// -- NOTES -------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+// * Underscores `_` need to be escaped `\_` as a underscore in RiveScript is a letter wildcard.
+// * Quick replies or buttons should be provided as <title>=<payload> pairs. For example: Title 1=PAYLOAD_1, Title 2=PAYLOAD_2
+
+// ----------------------------------------------------------------------------
+// -- POSTBACKS ---------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
++ GET\_STARTED
+- Hi, what would you like to hear?
+^ QUICK_REPLIES: Random Joke=RANDOM_JOKE, Categories=CATEGORIES
+
+// + HELP
+// 'HELP' postback is already matched by '[*] help [*]' trigger
+
+// + CATEGORIES
+// 'CATEGORIES' postback is already matched by '[*] categories [*]' trigger
+
++ CATEGORIES\_MORE\_#
+- Choose a category:
+^ QUICK_REPLIES: <call>categories <star></call>
+
++ RANDOM\_JOKE
+- <call>randomjoke</call>
+
++ RANDOM\_JOKE\_WITH\_CATEGORY\_*
+- <call>randomjoke "<star>"</call>
+
+// ----------------------------------------------------------------------------
+// -- TEXT MESSAGES -----------------------------------------------------------
+// ----------------------------------------------------------------------------
+
++ (hi|hey|hello|howdy|good day)
+- Hi there!
+
++ [*] your name [*]
+- My name is Chuck Bot!
+
++ [*] how are you [*]
+- I'm doing fine!
+- I'm doing great!
+
++ [tell me a] joke
+- <call>randomjoke</call>
+
++ [tell me] (another|again|more)
+- <call>randomjoke</call>
+
++ [tell me a] joke [with] category *
+- <call>randomjoke "<star>"</call>
+
++ (search|find) [me a|a] joke [with|containing] *
+- <call>searchjoke "<star2>"</call>
+
++ (lol|funny|hilarious|laughing|laughing out loud)
+- Yeah that was funny!
+
++ [*] help [*]
+- Hi there. I can tell you random Chuck Norris jokes. Ask me things like the following:
+^ \n
+^ \n  - Tell me a joke
+^ \n  - Tell me a joke with category movie
+^ \n  - Search joke containing steroids
+^ \n  - List available categories
+^ \n
+^ \nOr choose a command below.
+^ BUTTONS: Random Joke=RANDOM_JOKE, Categories=CATEGORIES
+
++ [*] categories [*]
+- Choose a category:
+^ QUICK_REPLIES: <call>categories 1</call>
+
++ *
+- OK! Ask me something else or type 'help'.

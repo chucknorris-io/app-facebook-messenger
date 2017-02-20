@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2016 the original author or authors.
+ * Copyright 2015-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package io.chucknorris.app.facebook.messenger;
+package io.chucknorris.app.facebook.messenger.cache;
 
-import static java.lang.String.format;
+import io.chucknorris.client.ChuckNorrisClient;
+import org.apache.commons.collections4.ListUtils;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import org.apache.commons.collections4.ListUtils;
-
-import io.chucknorris.client.ChuckNorrisClient;
+import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 
 /**
  * The Chuck Norris IO Categories Cache.
@@ -35,19 +35,18 @@ public class CategoriesCache {
 
     private static final Logger logger = Logger.getLogger(CategoriesCache.class.getName());
 
-    private static final long DEFAULR_REFRESH_INTERVAL = TimeUnit.DAYS.toMillis(1);
-
-    private ChuckNorrisClient chuckNorrisClient = new ChuckNorrisClient();
+    private final ChuckNorrisClient chuckNorrisClient;
 
     private List<String> categories;
     private long refreshInterval;
     private long refreshTimestamp = 0;
 
-    public CategoriesCache() {
-        this(DEFAULR_REFRESH_INTERVAL);
+    public CategoriesCache(final ChuckNorrisClient chuckNorrisClient) {
+        this(chuckNorrisClient, TimeUnit.DAYS.toMillis(1));
     }
 
-    public CategoriesCache(long refreshInterval) {
+    public CategoriesCache(ChuckNorrisClient chuckNorrisClient, long refreshInterval) {
+        this.chuckNorrisClient = requireNonNull(chuckNorrisClient, "'chuckNorrisClient' must not be null");
         this.refreshInterval = refreshInterval;
     }
 
