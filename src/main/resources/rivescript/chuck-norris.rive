@@ -45,13 +45,13 @@
 - I'm doing fine!
 - I'm doing great!
 
-+ [tell me a] joke
++ [tell me a|tell me|tell] joke
 - <call>randomjoke</call>
 
-+ [tell me] (another|again|more)
++ [tell me|tell me|tell] (another|again|more)
 - <call>randomjoke</call>
 
-+ [tell me a] joke [with] category *
++ [tell me a|tell me|tell] joke [with] category *
 - <call>randomjoke "<star>"</call>
 
 + (search|find) [me a|a] joke [with|containing] *
