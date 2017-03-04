@@ -42,119 +42,119 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 /**
- * TODO
+ * Abstract helper class for {@link ChuckNorrisCallbackHandler} integration tests.
  *
  * @author Marcel Overdijk
  */
 public abstract class AbstractChuckNorrisCallbackHandlerIntegrationTests {
 
-    protected CategoriesCache categoriesCache;
-    protected ChuckNorrisClient chuckNorrisClient;
-    protected Messenger messenger;
-    protected SendOperations sendOperations;
+	protected CategoriesCache categoriesCache;
+	protected ChuckNorrisClient chuckNorrisClient;
+	protected Messenger messenger;
+	protected SendOperations sendOperations;
 
-    protected ChuckNorrisCallbackHandler callbackHandler;
+	protected ChuckNorrisCallbackHandler callbackHandler;
 
-    protected String senderId;
-    protected IdMessageRecipient recipient;
+	protected String senderId;
+	protected IdMessageRecipient recipient;
 
-    @Before
-    public void setUp() {
+	@Before
+	public void setUp() {
 
-        this.senderId = "12345";
-        this.recipient = new IdMessageRecipient(senderId);
+		this.senderId = "12345";
+		this.recipient = new IdMessageRecipient(senderId);
 
-        this.categoriesCache = mock(CategoriesCache.class);
-        this.chuckNorrisClient = mock(ChuckNorrisClient.class);
-        this.messenger = mock(Messenger.class);
-        this.sendOperations = mock(SendOperations.class);
+		this.categoriesCache = mock(CategoriesCache.class);
+		this.chuckNorrisClient = mock(ChuckNorrisClient.class);
+		this.messenger = mock(Messenger.class);
+		this.sendOperations = mock(SendOperations.class);
 
-        Injector injector = Guice.createInjector(Modules
-                .override(new AppModule())
-                .with(new AbstractModule() {
+		Injector injector = Guice.createInjector(Modules
+				.override(new AppModule())
+				.with(new AbstractModule() {
 
-                    @Override
-                    protected void configure() {
-                        bind(CategoriesCache.class).toInstance(categoriesCache);
-                        bind(ChuckNorrisClient.class).toInstance(chuckNorrisClient);
-                        bind(Messenger.class).toInstance(messenger);
-                    }
-                }));
-        this.callbackHandler = injector.getInstance(ChuckNorrisCallbackHandler.class);
+					@Override
+					protected void configure() {
+						bind(CategoriesCache.class).toInstance(categoriesCache);
+						bind(ChuckNorrisClient.class).toInstance(chuckNorrisClient);
+						bind(Messenger.class).toInstance(messenger);
+					}
+				}));
+		this.callbackHandler = injector.getInstance(ChuckNorrisCallbackHandler.class);
 
-        when(messenger.send()).thenReturn(sendOperations);
+		when(messenger.send()).thenReturn(sendOperations);
 
-        List<String> categories;
-        categories = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
-            categories.add("category" + i);
-        }
-        when(categoriesCache.getCategories()).thenReturn(categories);
+		List<String> categories;
+		categories = new ArrayList<>();
+		for (int i = 1; i <= 20; i++) {
+			categories.add("category" + i);
+		}
+		when(categoriesCache.getCategories()).thenReturn(categories);
 
-        when(categoriesCache.getCategoriesPaged(6)).thenReturn(
-                ListUtils.partition(categories, 6));
+		when(categoriesCache.getCategoriesPaged(6)).thenReturn(
+				ListUtils.partition(categories, 6));
 
-        Joke joke = new Joke();
-        joke.setValue("Chuck Norris once accidentally broke steel by touching it.");
-        when(chuckNorrisClient.getRandomJoke()).thenReturn(joke);
+		Joke joke = new Joke();
+		joke.setValue("Chuck Norris once accidentally broke steel by touching it.");
+		when(chuckNorrisClient.getRandomJoke()).thenReturn(joke);
 
-        Joke jokeWithCategory = new Joke();
-        jokeWithCategory.setValue("When Chuck Norris wants an egg, he cracks open a chicken.");
-        when(chuckNorrisClient.getRandomJoke("category1")).thenReturn(jokeWithCategory);
+		Joke jokeWithCategory = new Joke();
+		jokeWithCategory.setValue("When Chuck Norris wants an egg, he cracks open a chicken.");
+		when(chuckNorrisClient.getRandomJoke("category1")).thenReturn(jokeWithCategory);
 
-        Joke jokeFromSearch = new Joke();
-        jokeFromSearch.setValue("Putin: We have the best nuclear weapons Obama: We have Chuck Norris");
-        when(chuckNorrisClient.searchJokes("obama")).thenReturn(Arrays.asList(jokeFromSearch));
-    }
+		Joke jokeFromSearch = new Joke();
+		jokeFromSearch.setValue("Putin: We have the best nuclear weapons Obama: We have Chuck Norris");
+		when(chuckNorrisClient.searchJokes("obama")).thenReturn(Arrays.asList(jokeFromSearch));
+	}
 
-    protected void onMessage(String message) {
-        MessagingItem messaging = createMessagingItemWithText(senderId, message);
-        callbackHandler.onMessage(messenger, messaging);
-    }
+	protected void onMessage(String message) {
+		MessagingItem messaging = createMessagingItemWithText(senderId, message);
+		callbackHandler.onMessage(messenger, messaging);
+	}
 
-    protected void onPostback(String payload) {
-        MessagingItem messaging = createMessagingItemWithPostback(senderId, payload);
-        callbackHandler.onPostback(messenger, messaging);
-    }
+	protected void onPostback(String payload) {
+		MessagingItem messaging = createMessagingItemWithPostback(senderId, payload);
+		callbackHandler.onPostback(messenger, messaging);
+	}
 
-    protected MessagingItem createMessagingItemWithPostback(String senderId, String payload) {
-        MessagingParticipant sender = new MessagingParticipant();
-        sender.setId(senderId);
-        PostbackItem postback = new PostbackItem();
-        postback.setPayload(payload);
-        MessagingItem messagingItem = new MessagingItem();
-        messagingItem.setSender(sender);
-        messagingItem.setPostback(postback);
-        return messagingItem;
-    }
+	protected MessagingItem createMessagingItemWithPostback(String senderId, String payload) {
+		MessagingParticipant sender = new MessagingParticipant();
+		sender.setId(senderId);
+		PostbackItem postback = new PostbackItem();
+		postback.setPayload(payload);
+		MessagingItem messagingItem = new MessagingItem();
+		messagingItem.setSender(sender);
+		messagingItem.setPostback(postback);
+		return messagingItem;
+	}
 
-    protected MessagingItem createMessagingItemWithText(String senderId, String text) {
-        MessagingParticipant sender = new MessagingParticipant();
-        sender.setId(senderId);
-        MessageItem message = new MessageItem();
-        message.setText(text);
-        MessagingItem messagingItem = new MessagingItem();
-        messagingItem.setSender(sender);
-        messagingItem.setMessage(message);
-        return messagingItem;
-    }
+	protected MessagingItem createMessagingItemWithText(String senderId, String text) {
+		MessagingParticipant sender = new MessagingParticipant();
+		sender.setId(senderId);
+		MessageItem message = new MessageItem();
+		message.setText(text);
+		MessagingItem messagingItem = new MessagingItem();
+		messagingItem.setSender(sender);
+		messagingItem.setMessage(message);
+		return messagingItem;
+	}
 
-    protected void verifyButtonTemplate(Matcher<ButtonTemplatePayload> matcher) {
-        verify(sendOperations).buttonTemplate(eq(recipient), argThat(matcher));
-    }
+	protected void verifyButtonTemplate(Matcher<ButtonTemplatePayload> matcher) {
+		verify(sendOperations).buttonTemplate(eq(recipient), argThat(matcher));
+	}
 
-    protected void verifyQuickReplies(String text, Matcher<List<QuickReply>> matcher) {
-        verify(sendOperations).quickReplies(eq(recipient), eq(text), argThat(matcher));
-    }
+	protected void verifyQuickReplies(String text, Matcher<List<QuickReply>> matcher) {
+		verify(sendOperations).quickReplies(eq(recipient), eq(text), argThat(matcher));
+	}
 
-    protected void verifyTextMessage(Matcher<String> matcher) {
-        verify(sendOperations).textMessage(eq(recipient), argThat(matcher));
-    }
+	protected void verifyTextMessage(Matcher<String> matcher) {
+		verify(sendOperations).textMessage(eq(recipient), argThat(matcher));
+	}
 }
